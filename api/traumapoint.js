@@ -14,11 +14,16 @@ async function getTmapRoute(origin, destination, apiKey = TMAP_HARDCODED_KEY, de
     throw new Error("🚨 departureTime은 Date 객체로 명시적으로 전달해야 합니다.");
   }
 
-  function formatToISO8601WithKST(date) {
-    const pad = n => n.toString().padStart(2, '0');
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
-           `T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}+0900`;
-  }
+function formatToISO8601WithKST(date) {
+  const pad = n => n.toString().padStart(2, '0');
+  const yyyy = date.getFullYear();
+  const MM = pad(date.getMonth() + 1);  // ⬅️ 여기는 +1이 맞습니다
+  const dd = pad(date.getDate());
+  const hh = pad(date.getHours());
+  const mm = pad(date.getMinutes());
+  const ss = pad(date.getSeconds());
+  return `${yyyy}-${MM}-${dd}T${hh}:${mm}:${ss}+09:00`;  // ⬅️ 여기도 수정 완료
+}
 
   const predictionTime = formatToISO8601WithKST(departureTime);
 
