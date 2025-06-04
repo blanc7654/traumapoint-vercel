@@ -43,13 +43,13 @@ function formatToISO8601WithKST(date) {
         lon: destination.lon.toString(),
         lat: destination.lat.toString(),
         destSearchFlag: "03"
+}
       },
       predictionType: "departure",
       predictionTime,
       searchOption: "02",
       tollgateCarType: "car",
       trafficInfo: "Y"
-    }
   };
 
   try {
