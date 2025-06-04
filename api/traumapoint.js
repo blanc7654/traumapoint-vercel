@@ -44,7 +44,7 @@ function formatToISO8601WithKST(date) {
         lat: destination.lat.toString(),
         destSearchFlag: "03"
 	},
-      predictionType: "departure",
+      predictionType: "arrival",
       predictionTime,
       searchOption: "02",
       tollgateCarType: "car",
