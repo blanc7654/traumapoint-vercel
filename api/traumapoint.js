@@ -13,27 +13,17 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  let traumaPoints;
+let traumaPoints;
 
-  try {
-    const baseUrl = `${req.headers["x-forwarded-proto"]}://${req.headers.host}`;
-
-    const response = await fetch(`${baseUrl}/traumaPoints_within_9km.json`, {
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status} - ${response.statusText}`);
-    }
-
-    traumaPoints = await response.json();
-    console.log("✅ traumaPoints JSON fetch 성공");
-
-  } catch (err) {
-    console.error("❌ traumaPoints JSON fetch 실패:", err);
-    return res.status(500).json({ error: "traumaPoints 불러오기 실패", stack: err.stack });
-  }
-
+try {
+  const filePath = path.join(process.cwd(), "public", "data", "traumaPoints_within_9km.json");
+  const fileContents = await fs.readFile(filePath, "utf-8");
+  traumaPoints = JSON.parse(fileContents);
+  console.log("✅ traumaPoints JSON 로컬 파일 로딩 성공");
+} catch (err) {
+  console.error("❌ traumaPoints JSON 파일 로딩 실패:", err);
+  return res.status(500).json({ error: "traumaPoints 파일 로딩 실패", stack: err.stack });
+}
   console.log("✅ traumaPoints JSON fetch 성공");
 
   const GIL = {
