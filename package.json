@@ -1,0 +1,14 @@
+{
+  "name": "traumapoint-vercel",
+  "version": "1.0.0",
+  "description": "TraumaPoint 웹앱 with Tmap API on Vercel",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.9.0"
+  }
+}
