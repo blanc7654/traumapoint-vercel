@@ -1,4 +1,4 @@
-import { getTmapRoute } from "../lib/geo/tmapRoute.js";
+import { getTmapRoute } from "../../lib/geo/tmapRoute.js";
 
 export default async function handler(req, res) {
   console.log("📦 [traumapoint API] 함수 시작");
