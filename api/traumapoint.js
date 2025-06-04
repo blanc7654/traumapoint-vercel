@@ -4,6 +4,7 @@ export default async function handler(req, res) {
   console.log("📦 [traumapoint API] 함수 시작");
 
 const apiKey = process.env.TMAP_APP_KEY; // 
+console.log("🔑 [traumapoint] Loaded API Key:", apiKey);
 
   if (req.method !== "POST") {
     console.warn("⚠️ [traumapoint API] POST 외 메서드 호출");
