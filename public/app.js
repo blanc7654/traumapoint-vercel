@@ -97,9 +97,8 @@ function handleAutocomplete(e) {
           selectedPlace = {
   lat: parseFloat(poi.frontLat),
   lon: parseFloat(poi.frontLon),
-  name: poi.name,         // ✅ 출발지 이름 (출발지 → 길병원 경로에서 필요)
-  poiId: poi.id 
-          };
+  name: poi.name      // ✅ 출발지 이름 (출발지 → 길병원 경로에서 필요)
+            };
           suggestionsBox.innerHTML = '';
         });
         suggestionsBox.appendChild(div);
