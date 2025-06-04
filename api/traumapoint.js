@@ -25,6 +25,8 @@ function formatToISO8601WithKST(date) {
   return `${yyyy}-${MM}-${dd}T${hh}:${mm}:${ss}+0900`;  // ⬅️ 여기도 수정 완료
 }
 
+
+
   const predictionTime = formatToISO8601WithKST(departureTime);
 
   const body = {
@@ -140,16 +142,15 @@ export default async function handler(req, res) {
 
   try {
     const now = new Date();
-    const departurePlus1m = new Date(now.getTime() + 1 * 60000);
     const departurePlus15m = new Date(now.getTime() + 15 * 60000);
     const originPoint = { lat: origin.lat, lon: origin.lon, name: origin.name || "출발지" };
 
-    const directRoute = await getTmapRoute(originPoint, GIL, TMAP_HARDCODED_KEY, departurePlus1m);
+    const directRoute = await getTmapRoute(originPoint, GIL, TMAP_HARDCODED_KEY, now);
     const directToGilETA = Math.round(directRoute.duration / 60);
 
     const eta119List = await Promise.all(
       traumaPoints.map(async (tp) => {
-        const route = await getTmapRoute(originPoint, tp, TMAP_HARDCODED_KEY, departurePlus1m);
+        const route = await getTmapRoute(originPoint, tp, TMAP_HARDCODED_KEY, now);
         const eta119 = Math.round(route.duration / 60);
         if (eta119 >= directToGilETA) return null;
         return { ...tp, eta119 };
