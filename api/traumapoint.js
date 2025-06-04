@@ -1,7 +1,7 @@
 // traumapoint.js (Vercel용 통합 버전)
-const TMAP_HARDCODED_KEY = "DfL7HTud8u85PRWBJKP2i8Xqv0lyQRGTagPHDAUe";
+const APP_KEY = "Xqh4zUvSTE2uxQvWJZcLC6ddGEweKa5UEXSDx47e";
 
-async function getTmapRoute(origin, destination, apiKey = TMAP_HARDCODED_KEY, departureTime = new Date()) {
+async function getTmapRoute(origin, destination, departureTime = new Date(), label = "") {
   const url = "https://apis.openapi.sk.com/tmap/routes/prediction?version=1";
 
   if (!origin || typeof origin.lat !== "number" || typeof origin.lon !== "number" ||
@@ -145,12 +145,12 @@ export default async function handler(req, res) {
     const departurePlus15m = new Date(now.getTime() + 15 * 60000);
     const originPoint = { lat: origin.lat, lon: origin.lon, name: origin.name || "출발지" };
 
-    const directRoute = await getTmapRoute(originPoint, GIL, TMAP_HARDCODED_KEY, now);
+    const directRoute = await getTmapRoute(originPoint, GIL, now);
     const directToGilETA = Math.round(directRoute.duration / 60);
 
     const eta119List = await Promise.all(
       traumaPoints.map(async (tp) => {
-        const route = await getTmapRoute(originPoint, tp, TMAP_HARDCODED_KEY, now);
+        const route = await getTmapRoute(originPoint, tp, now);
         const eta119 = Math.round(route.duration / 60);
         if (eta119 >= directToGilETA) return null;
         return { ...tp, eta119 };
@@ -159,7 +159,7 @@ export default async function handler(req, res) {
 
     const withDocETA = await Promise.all(
       eta119List.filter(Boolean).map(async (tp) => {
-        const route = await getTmapRoute(GIL, tp, TMAP_HARDCODED_KEY, departurePlus15m);
+        const route = await getTmapRoute(GIL, tp, departurePlus15m);
         const etaDocRaw = Math.round(route.duration / 60);
         const etaDoc = etaDocRaw + 15;
         if (tp.eta119 <= etaDoc || etaDocRaw > directToGilETA + 20) return null;
@@ -170,7 +170,7 @@ export default async function handler(req, res) {
     const withTpToGil = await Promise.all(
       withDocETA.filter(Boolean).map(async (tp) => {
         const depTime = new Date(now.getTime() + tp.eta119 * 60000);
-        const route = await getTmapRoute(tp, GIL, TMAP_HARDCODED_KEY, depTime);
+        const route = await getTmapRoute(tp, GIL, depTime);
         const tptogilETA = Math.round(route.duration / 60);
         const totalTransfer = tp.eta119 + tptogilETA;
         if (totalTransfer > directToGilETA + 20) return null;
