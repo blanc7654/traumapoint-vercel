@@ -3,9 +3,6 @@ import { getTmapRoute } from "../lib/geo/tmapRoute.js";
 export default async function handler(req, res) {
   console.log("📦 [traumapoint API] 함수 시작");
 
-const apiKey = process.env.TMAP_APP_KEY; // 
-console.log("🔑 [traumapoint] Loaded API Key:", apiKey);
-
   if (req.method !== "POST") {
     console.warn("⚠️ [traumapoint API] POST 외 메서드 호출");
     return res.status(405).json({ message: "Method Not Allowed" });
@@ -77,7 +74,7 @@ console.log("🔑 [traumapoint] Loaded API Key:", apiKey);
 
     const originPoint = { lat: origin.lat, lon: origin.lon, name: origin.name || "출발지" };
 
-    const directRoute = await getTmapRoute(originPoint, GIL, apiKey, departurePlus1m);
+    const directRoute = await getTmapRoute(originPoint, GIL, departurePlus1m);
     if (!directRoute || typeof directRoute.duration !== "number") {
       console.error("❌ 길병원 직행 ETA 계산 실패");
       return res.status(500).json({ error: "길병원 직행 ETA 계산 실패" });
@@ -90,7 +87,7 @@ console.log("🔑 [traumapoint] Loaded API Key:", apiKey);
 
     const eta119List = await Promise.all(
       traumaPoints.map(async (tp) => {
-        const route = await getTmapRoute(originPoint, tp, apiKey, departurePlus1m);
+        const route = await getTmapRoute(originPoint, tp, departurePlus1m);
         const eta119 = Math.round(route.duration / 60);
         const fallback = !!route.fallback;
 
@@ -109,7 +106,7 @@ console.log("🔑 [traumapoint] Loaded API Key:", apiKey);
 
     const withDocETA = await Promise.all(
       eta119List.filter(Boolean).map(async (tp) => {
-        const route = await getTmapRoute(GIL, tp, apiKey, departurePlus15m);
+        const route = await getTmapRoute(GIL, tp, departurePlus15m);
         const etaDocRaw = Math.round(route.duration / 60);
         const etaDoc = etaDocRaw + 15;
 
@@ -139,7 +136,7 @@ console.log("🔑 [traumapoint] Loaded API Key:", apiKey);
     const withTpToGil = await Promise.all(
       withDocETA.filter(Boolean).map(async (tp) => {
         const tpToGilDeparture = new Date(now.getTime() + tp.eta119 * 60 * 1000);
-        const route = await getTmapRoute(tp, GIL, apiKey, tpToGilDeparture);
+        const route = await getTmapRoute(tp, GIL, tpToGilDeparture);
         const tptogilETA = Math.round(route.duration / 60);
         const totalTransfer = tp.eta119 + tptogilETA;
 
