@@ -1,7 +1,7 @@
 // traumapoint.js (Vercel용 통합 버전)
 const APP_KEY = "Xqh4zUvSTE2uxQvWJZcLC6ddGEweKa5UEXSDx47e";
 
-async function getTmapRoute(origin, destination, departureTime = new Date(), label = "") {
+async function getTmapRoute(origin, destination, apiKey, departureTime = new Date(), label = "") {
   const url = "https://apis.openapi.sk.com/tmap/routes/prediction?version=1";
 
   if (!origin || typeof origin.lat !== "number" || typeof origin.lon !== "number" ||
@@ -145,12 +145,12 @@ export default async function handler(req, res) {
     const departurePlus15m = new Date(now.getTime() + 15 * 60000);
     const originPoint = { lat: origin.lat, lon: origin.lon, name: origin.name || "출발지" };
 
-    const directRoute = await getTmapRoute(originPoint, GIL, APP_KEY, now);
+    const directRoute = await getTmapRoute(originPoint, GIL, APP_KEY, new Date());
     const directToGilETA = Math.round(directRoute.duration / 60);
 
     const eta119List = await Promise.all(
       traumaPoints.map(async (tp) => {
-        const route = await getTmapRoute(originPoint, tp, APP_KEY, now);
+        const route = await getTmapRoute(originPoint, tp, APP_KEY, new Date());
         const eta119 = Math.round(route.duration / 60);
         if (eta119 >= directToGilETA) return null;
         return { ...tp, eta119 };
