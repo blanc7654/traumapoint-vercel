@@ -33,9 +33,10 @@ function formatToISO8601WithKST(date) {
     routesInfo: {
       departure: {
         name: origin.name || "출발지",
-        lon: origin.lon.toString(),
-        lat: origin.lat.toString(),
-        depSearchFlag: "03"
+  lat: origin.lat.toString(),
+  lon: origin.lon.toString(),
+  depSearchFlag: origin.poiId ? "05" : "03",
+  poiId: origin.poiId || undefined
       },
       destination: {
         name: destination.name || "도착지",
@@ -145,7 +146,7 @@ export default async function handler(req, res) {
     const departurePlus15m = new Date(now.getTime() + 15 * 60000);
     const originPoint = { lat: origin.lat, lon: origin.lon, name: origin.name || "출발지" };
 
-    const directRoute = await getTmapRoute(originPoint, GIL, APP_KEY, new Date());
+    const directRoute = await getTmapRoute(originPoint, GIL, APP_KEY, now);
     const directToGilETA = Math.round(directRoute.duration / 60);
 
     const eta119List = await Promise.all(
