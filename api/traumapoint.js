@@ -22,7 +22,7 @@ function formatToISO8601WithKST(date) {
   const hh = pad(date.getHours());
   const mm = pad(date.getMinutes());
   const ss = pad(date.getSeconds());
-  return `${yyyy}-${MM}-${dd}T${hh}:${mm}:${ss}+09:00`;  // ⬅️ 여기도 수정 완료
+  return `${yyyy}-${MM}-${dd}T${hh}:${mm}:${ss}+0900`;  // ⬅️ 여기도 수정 완료
 }
 
   const predictionTime = formatToISO8601WithKST(departureTime);
