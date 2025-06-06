@@ -1,3 +1,5 @@
+console.log("📦 앱 시작됨 - 버전: 20250606");
+
 let map;
 let selectedPlace = null;
 let tmapKey = 'ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1';
