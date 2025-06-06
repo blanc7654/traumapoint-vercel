@@ -47,7 +47,8 @@ function formatToISO8601WithKST(date) {
       predictionTime,
       searchOption: "02",
       tollgateCarType: "car",
-      trafficInfo: "Y"
+      trafficInfo: "Y",
+      dummy: Math.random() 
 	}
   };
 
