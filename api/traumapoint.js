@@ -61,14 +61,19 @@ function formatToISO8601WithKST(date) {
     });
 
     const data = await response.json();
-    console.log("📦 Tmap API 응답 원본:", JSON.stringify(data, null, 2));
-    console.log("📤 요청 바디:", JSON.stringify(body, null, 2));
-
+    
     const summary = data.features?.find(f => f.properties?.totalTime);
     if (!summary) {
       console.error("📭 전체 응답 데이터:", JSON.stringify(data, null, 2));
       throw new Error(`[${origin.name} → ${destination.name}] 경로 요약 정보 없음`);
     }
+
+const debug = data.features[0].properties;
+console.log("🧪 routeType:", debug.routeType);
+console.log("🧪 patternTrafficDate:", debug.patternTrafficDate);
+console.log("🧪 realTimeTrafficDateTime:", debug.realTimeTrafficDateTime);
+console.log("🧪 departureTime:", debug.departureTime);
+console.log("🧪 trafficInfo:", debug.trafficInfo);
 
     const duration = summary.properties.totalTime;
     const distance = summary.properties.totalDistance;
