@@ -1,5 +1,5 @@
 // traumapoint.js (Vercel용 통합 버전)
-const APP_KEY = "ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1";
+const APP_KEY = "FHxb0xB7lI1gtEyDp3j7J2k0CIJzz8Bl54IY9ePW";
 
 function formatToISO8601WithKST(date) {
   const pad = n => n.toString().padStart(2, '0');
