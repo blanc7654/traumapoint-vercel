@@ -142,7 +142,7 @@ export default async function handler(req, res) {
 
   try {
     const now = new Date();
-    const departurePlus15m = new Date(now.getTime() + 15 * 60000);
+    const departurePlus5m = new Date(now.getTime() + 5 * 60000);
     const originPoint = { lat: origin.lat, lon: origin.lon, name: origin.name || "출발지" };
 
     const directRoute = await getTmapRoute(originPoint, GIL, APP_KEY, now);
@@ -159,9 +159,9 @@ export default async function handler(req, res) {
 
     const withDocETA = await Promise.all(
       eta119List.filter(Boolean).map(async (tp) => {
-        const route = await getTmapRoute(GIL, tp, APP_KEY, departurePlus15m);
+        const route = await getTmapRoute(GIL, tp, APP_KEY, departurePlus5m);
         const etaDocRaw = Math.round(route.duration / 60);
-        const etaDoc = etaDocRaw + 15;
+        const etaDoc = etaDocRaw + 5;
         if (tp.eta119 <= etaDoc || etaDocRaw > directToGilETA + 20) return null;
         return { ...tp, etaDoc, etaDocRaw };
       })
