@@ -36,7 +36,8 @@ function formatToISO8601WithKST(date) {
         name: origin.name || "출발지",
   lat: origin.lat.toString(),
   lon: origin.lon.toString(),
-  depSearchFlag: "03"
+  depSearchFlag: origin.poiId ? "05" : "03",
+  poiId: origin.poiId || undefined 
       },
       destination: {
         name: destination.name || "도착지",
@@ -49,8 +50,7 @@ function formatToISO8601WithKST(date) {
       searchOption: "02",
       tollgateCarType: "car",
       trafficInfo: "Y",
-      dummy: Math.random() 
-	}
+      }
   };
 
   try {
