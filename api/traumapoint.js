@@ -90,6 +90,11 @@ function formatToISO8601WithKST(date) {
 
 export default async function handler(req, res) {
   console.log("📦 [traumapoint API] 함수 시작");
+
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+
   if (req.method !== "POST") {
     console.warn("⚠️ [traumapoint API] POST 외 메서드 호출");
     return res.status(405).json({ message: "Method Not Allowed" });

@@ -10,7 +10,7 @@ window.onload = function () {
     zoom: 12
   });
 
-  fetch('/data/traumaPoints_within_9km.json')
+  fetch('/data/traumaPoints_within_9km.json?v=20250606')
     .then(res => res.json())
     .then(data => {
       console.log("✅ traumaPoints loaded:", data);
@@ -80,7 +80,13 @@ function handleAutocomplete(e) {
 
   if (!keyword.trim()) return;
 
-  fetch(`https://apis.openapi.sk.com/tmap/pois?version=1&searchKeyword=${encodeURIComponent(keyword)}&appKey=${tmapKey}`)
+  fetch(`https://apis.openapi.sk.com/tmap/pois?version=1&searchKeyword=${encodeURIComponent(keyword)}&appKey=${tmapKey}&v=${Date.now()}`, {
+  cache: 'no-store', 
+  headers: {
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache'
+  }
+})
     .then(async res => {
       if (!res.ok) throw new Error("Tmap 응답 실패");
       const text = await res.text();
@@ -144,6 +150,7 @@ function requestRecommendation(origin) {
   fetch(`/api/traumapoint`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    cache: 'no-store', // ✅ 캐시 무시
     body: JSON.stringify({ origin })
   })
     .then(async res => {
