@@ -1,6 +1,17 @@
 // traumapoint.js (Vercel용 통합 버전)
 const APP_KEY = "ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1";
 
+function formatToISO8601WithKST(date) {
+  const pad = n => n.toString().padStart(2, '0');
+  const yyyy = date.getFullYear();
+  const MM = pad(date.getMonth() + 1);  // ⬅️ 여기는 +1이 맞습니다
+  const dd = pad(date.getDate());
+  const hh = pad(date.getHours());
+  const mm = pad(date.getMinutes());
+  const ss = pad(date.getSeconds());
+  return `${yyyy}-${MM}-${dd}T${hh}:${mm}:${ss}+0900`;  // ⬅️ 여기도 수정 완료
+}
+
 async function getTmapRoute(origin, destination, apiKey, departureTime = new Date(), label = "") {
   const url = "https://apis.openapi.sk.com/tmap/routes/prediction?version=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&sort=index";
 
@@ -15,24 +26,13 @@ async function getTmapRoute(origin, destination, apiKey, departureTime = new Dat
     throw new Error("🚨 departureTime은 Date 객체로 명시적으로 전달해야 합니다.");
   }
 
-function formatToISO8601WithKST(date) {
-  const pad = n => n.toString().padStart(2, '0');
-  const yyyy = date.getFullYear();
-  const MM = pad(date.getMonth() + 1);  // ⬅️ 여기는 +1이 맞습니다
-  const dd = pad(date.getDate());
-  const hh = pad(date.getHours());
-  const mm = pad(date.getMinutes());
-  const ss = pad(date.getSeconds());
-  return `${yyyy}-${MM}-${dd}T${hh}:${mm}:${ss}+0900`;  // ⬅️ 여기도 수정 완료
-}
 
 
-
-  const predictionTime = formatToISO8601WithKST(departureTime);
+  const predictionTime = formatToISO8601WithKST(new Date(departureTime.getTime() + 3 * 60000));
 
   const body = {
     routesInfo: {
-      departure: {
+departure: {
         name: origin.name || "출발지",
   lat: origin.lat.toString(),
   lon: origin.lon.toString(),
@@ -154,6 +154,9 @@ export default async function handler(req, res) {
 
   try {
     const now = new Date();
+	const safeFutureTime = new Date(now.getTime() + 3 * 60000); // 3분 후
+	const predictionTime = formatToISO8601WithKST(safeFutureTime);
+
     const departurePlus5m = new Date(now.getTime() + 5 * 60000);
     const originPoint = { lat: origin.lat, lon: origin.lon, name: origin.name || "출발지" };
 
