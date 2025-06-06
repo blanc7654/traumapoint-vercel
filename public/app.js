@@ -1,6 +1,6 @@
 let map;
 let selectedPlace = null;
-let tmapKey = 'Xqh4zUvSTE2uxQvWJZcLC6ddGEweKa5UEXSDx47e';
+let tmapKey = 'MsHRv3qYXy5Bje0KXHHKX2W8v63m41dO97A9S1Nn';
 
 window.onload = function () {
   map = new Tmapv2.Map("map", {

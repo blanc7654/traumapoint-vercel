@@ -1,5 +1,5 @@
 // traumapoint.js (Vercel용 통합 버전)
-const APP_KEY = "Xqh4zUvSTE2uxQvWJZcLC6ddGEweKa5UEXSDx47e";
+const APP_KEY = "MsHRv3qYXy5Bje0KXHHKX2W8v63m41dO97A9S1Nn";
 
 async function getTmapRoute(origin, destination, apiKey, departureTime = new Date(), label = "") {
   const url = "https://apis.openapi.sk.com/tmap/routes/prediction?version=1";
