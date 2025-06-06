@@ -2,7 +2,8 @@
 const APP_KEY = "ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1";
 
 async function getTmapRoute(origin, destination, apiKey, departureTime = new Date(), label = "") {
-  const url = "https://apis.openapi.sk.com/tmap/routes/prediction?version=1";
+  const url = "https://apis.openapi.sk.com/tmap/routes/prediction?version=1&reqCoordType=WGS84GEO&resCoordType=WGS84GEO&sort=index";
+
 
   if (!origin || typeof origin.lat !== "number" || typeof origin.lon !== "number" ||
       !destination || typeof destination.lat !== "number" || typeof destination.lon !== "number") {

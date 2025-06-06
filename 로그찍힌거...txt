@@ -1,0 +1,721 @@
+12:33:01.867
+📦 [traumapoint API] 함수 시작
+12:33:02.102
+✅ traumaPoints JSON fetch 성공
+12:33:02.104
+📍 요청 받은 origin = { lat: 37.49343308, lon: 126.87603242, name: '구로주공1차아파트' }
+12:33:02.104
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.616
+🧪 routeType: undefined
+12:33:03.616
+🧪 patternTrafficDate: undefined
+12:33:03.616
+🧪 realTimeTrafficDateTime: undefined
+12:33:03.616
+🧪 departureTime: 2025-06-06T03:33:02+0900
+12:33:03.616
+🧪 trafficInfo: undefined
+12:33:03.617
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '길병원',
+  predictionTime: '2025-06-06T03:33:02+0900',
+  totalTime: 1892,
+  totalDistance: 30367
+}
+12:33:03.618
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.619
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.620
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.621
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.621
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.622
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.623
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.624
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.625
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.626
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.626
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.626
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.627
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.627
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.628
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.628
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.629
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.629
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.643
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.644
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:03.662
+🔑 사용된 API KEY: ff2XFiLWzU26CQBmdLzf44Dik9czqiWVao072nF1
+12:33:04.623
+🧪 routeType: undefined
+12:33:04.623
+🧪 patternTrafficDate: undefined
+12:33:04.623
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.623
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.623
+🧪 trafficInfo: undefined
+12:33:04.623
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '도림119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1551,
+  totalDistance: 28416
+}
+12:33:04.661
+🧪 routeType: undefined
+12:33:04.661
+🧪 patternTrafficDate: undefined
+12:33:04.661
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.661
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.661
+🧪 trafficInfo: undefined
+12:33:04.661
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '석남119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1518,
+  totalDistance: 27018
+}
+12:33:04.748
+🧪 routeType: undefined
+12:33:04.748
+🧪 patternTrafficDate: undefined
+12:33:04.748
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.748
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.748
+🧪 trafficInfo: undefined
+12:33:04.749
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '서부119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1488,
+  totalDistance: 12157
+}
+12:33:04.759
+🧪 routeType: undefined
+12:33:04.760
+🧪 patternTrafficDate: undefined
+12:33:04.760
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.760
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.760
+🧪 trafficInfo: undefined
+12:33:04.760
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '효성119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1653,
+  totalDistance: 22441
+}
+12:33:04.813
+🧪 routeType: undefined
+12:33:04.813
+🧪 patternTrafficDate: undefined
+12:33:04.813
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.813
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.813
+🧪 trafficInfo: undefined
+12:33:04.813
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '은행119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1561,
+  totalDistance: 22461
+}
+12:33:04.836
+🧪 routeType: undefined
+12:33:04.836
+🧪 patternTrafficDate: undefined
+12:33:04.836
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.836
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.836
+🧪 trafficInfo: undefined
+12:33:04.837
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '서창119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1529,
+  totalDistance: 23609
+}
+12:33:04.838
+🧪 routeType: undefined
+12:33:04.838
+🧪 patternTrafficDate: undefined
+12:33:04.838
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.839
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.839
+🧪 trafficInfo: undefined
+12:33:04.839
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '신송119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2079,
+  totalDistance: 34340
+}
+12:33:04.843
+🧪 routeType: undefined
+12:33:04.843
+🧪 patternTrafficDate: undefined
+12:33:04.843
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.843
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.843
+🧪 trafficInfo: undefined
+12:33:04.843
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '관교119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1940,
+  totalDistance: 30812
+}
+12:33:04.846
+🧪 routeType: undefined
+12:33:04.846
+🧪 patternTrafficDate: undefined
+12:33:04.846
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.846
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.846
+🧪 trafficInfo: undefined
+12:33:04.846
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '구월119안전센터(남동소방서)',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1902,
+  totalDistance: 30661
+}
+12:33:04.871
+🧪 routeType: undefined
+12:33:04.871
+🧪 patternTrafficDate: undefined
+12:33:04.871
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.871
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.871
+🧪 trafficInfo: undefined
+12:33:04.871
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '옥련119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2046,
+  totalDistance: 33548
+}
+12:33:04.877
+🧪 routeType: undefined
+12:33:04.877
+🧪 patternTrafficDate: undefined
+12:33:04.877
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.877
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.877
+🧪 trafficInfo: undefined
+12:33:04.877
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '부개119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1534,
+  totalDistance: 22398
+}
+12:33:04.890
+🧪 routeType: undefined
+12:33:04.890
+🧪 patternTrafficDate: undefined
+12:33:04.890
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.890
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.890
+🧪 trafficInfo: undefined
+12:33:04.890
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '갈산119안전센터(부평소방서)',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1372,
+  totalDistance: 21112
+}
+12:33:04.904
+🧪 routeType: undefined
+12:33:04.904
+🧪 patternTrafficDate: undefined
+12:33:04.904
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.904
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.904
+🧪 trafficInfo: undefined
+12:33:04.905
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '소래119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1956,
+  totalDistance: 31900
+}
+12:33:04.912
+🧪 routeType: undefined
+12:33:04.912
+🧪 patternTrafficDate: undefined
+12:33:04.913
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.913
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.913
+🧪 trafficInfo: undefined
+12:33:04.913
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '신현119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1642,
+  totalDistance: 26094
+}
+12:33:04.934
+🧪 routeType: undefined
+12:33:04.934
+🧪 patternTrafficDate: undefined
+12:33:04.934
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.934
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.935
+🧪 trafficInfo: undefined
+12:33:04.935
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '고잔119안전센터(공단소방서)',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1852,
+  totalDistance: 31061
+}
+12:33:04.937
+🧪 routeType: undefined
+12:33:04.937
+🧪 patternTrafficDate: undefined
+12:33:04.938
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.938
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.938
+🧪 trafficInfo: undefined
+12:33:04.938
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '부천소방서(중앙119안전센터)[심곡출동대아님]',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1505,
+  totalDistance: 11873
+}
+12:33:04.971
+🧪 routeType: undefined
+12:33:04.971
+🧪 patternTrafficDate: undefined
+12:33:04.971
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.971
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.971
+🧪 trafficInfo: undefined
+12:33:04.972
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '연안119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2278,
+  totalDistance: 37509
+}
+12:33:04.982
+🧪 routeType: undefined
+12:33:04.982
+🧪 patternTrafficDate: undefined
+12:33:04.982
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.982
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.982
+🧪 trafficInfo: undefined
+12:33:04.982
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '담방119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1781,
+  totalDistance: 27797
+}
+12:33:04.997
+🧪 routeType: undefined
+12:33:04.997
+🧪 patternTrafficDate: undefined
+12:33:04.997
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.997
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.997
+🧪 trafficInfo: undefined
+12:33:04.997
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '삼산119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1533,
+  totalDistance: 22301
+}
+12:33:04.999
+🧪 routeType: undefined
+12:33:04.999
+🧪 patternTrafficDate: undefined
+12:33:04.999
+🧪 realTimeTrafficDateTime: undefined
+12:33:04.999
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:04.999
+🧪 trafficInfo: undefined
+12:33:05.000
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '중동119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1786,
+  totalDistance: 11369
+}
+12:33:05.001
+🧪 routeType: undefined
+12:33:05.001
+🧪 patternTrafficDate: undefined
+12:33:05.001
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.001
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.001
+🧪 trafficInfo: undefined
+12:33:05.001
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '도화119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1734,
+  totalDistance: 30237
+}
+12:33:05.007
+🧪 routeType: undefined
+12:33:05.007
+🧪 patternTrafficDate: undefined
+12:33:05.007
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.007
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.007
+🧪 trafficInfo: undefined
+12:33:05.007
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '부흥119안전센터(부평소방서)',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1719,
+  totalDistance: 24236
+}
+12:33:05.030
+🧪 routeType: undefined
+12:33:05.030
+🧪 patternTrafficDate: undefined
+12:33:05.030
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.030
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.030
+🧪 trafficInfo: undefined
+12:33:05.030
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '송현119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1873,
+  totalDistance: 30879
+}
+12:33:05.032
+🧪 routeType: undefined
+12:33:05.032
+🧪 patternTrafficDate: undefined
+12:33:05.032
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.032
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.032
+🧪 trafficInfo: undefined
+12:33:05.032
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '원창119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1810,
+  totalDistance: 29113
+}
+12:33:05.062
+🧪 routeType: undefined
+12:33:05.062
+🧪 patternTrafficDate: undefined
+12:33:05.062
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.062
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.062
+🧪 trafficInfo: undefined
+12:33:05.062
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '논현119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2109,
+  totalDistance: 32086
+}
+12:33:05.064
+🧪 routeType: undefined
+12:33:05.064
+🧪 patternTrafficDate: undefined
+12:33:05.064
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.064
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.064
+🧪 trafficInfo: undefined
+12:33:05.064
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '동춘119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2013,
+  totalDistance: 34072
+}
+12:33:05.072
+🧪 routeType: undefined
+12:33:05.073
+🧪 patternTrafficDate: undefined
+12:33:05.074
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.074
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.074
+🧪 trafficInfo: undefined
+12:33:05.074
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '국제119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2228,
+  totalDistance: 38004
+}
+12:33:05.082
+🧪 routeType: undefined
+12:33:05.082
+🧪 patternTrafficDate: undefined
+12:33:05.082
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.082
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.082
+🧪 trafficInfo: undefined
+12:33:05.082
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '만수119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2067,
+  totalDistance: 29449
+}
+12:33:05.083
+🧪 routeType: undefined
+12:33:05.083
+🧪 patternTrafficDate: undefined
+12:33:05.083
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.083
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.083
+🧪 trafficInfo: undefined
+12:33:05.083
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '가좌119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1664,
+  totalDistance: 29865
+}
+12:33:05.084
+🧪 routeType: undefined
+12:33:05.084
+🧪 patternTrafficDate: undefined
+12:33:05.084
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.084
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.084
+🧪 trafficInfo: undefined
+12:33:05.084
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '주안119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2053,
+  totalDistance: 32867
+}
+12:33:05.087
+🧪 routeType: undefined
+12:33:05.087
+🧪 patternTrafficDate: undefined
+12:33:05.087
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.087
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.087
+🧪 trafficInfo: undefined
+12:33:05.087
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '신기119안전센터(미추홀소방서)',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1948,
+  totalDistance: 32209
+}
+12:33:05.096
+🧪 routeType: undefined
+12:33:05.096
+🧪 patternTrafficDate: undefined
+12:33:05.096
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.096
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.096
+🧪 trafficInfo: undefined
+12:33:05.096
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '상동119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1750,
+  totalDistance: 22900
+}
+12:33:05.110
+🧪 routeType: undefined
+12:33:05.111
+🧪 patternTrafficDate: undefined
+12:33:05.111
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.111
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.111
+🧪 trafficInfo: undefined
+12:33:05.111
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '산곡119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 1883,
+  totalDistance: 25319
+}
+12:33:05.121
+🧪 routeType: undefined
+12:33:05.121
+🧪 patternTrafficDate: undefined
+12:33:05.121
+🧪 realTimeTrafficDateTime: undefined
+12:33:05.121
+🧪 departureTime: 2025-06-06T03:33:03+0900
+12:33:05.121
+🧪 trafficInfo: undefined
+12:33:05.121
+🚗 타임머신 응답 요약: {
+  from: '구로주공1차아파트',
+  to: '용현119안전센터',
+  predictionTime: '2025-06-06T03:33:03+0900',
+  totalTime: 2160,
+  totalDistance: 36957
