@@ -80,7 +80,7 @@
       const width = container.offsetWidth;
       const scrollLeft = container.scrollLeft;
       const pageIndex = Math.round(scrollLeft / width) + 1;
-      indicator.textContent = ${pageIndex} / 3;
+      indicator.textContent = `${pageIndex} / 3`;
       dot.textContent = ['● ○ ○', '○ ● ○', '○ ○ ●'][pageIndex - 1] || '● ○ ○';
     });
   </script>
