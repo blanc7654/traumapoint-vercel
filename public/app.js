@@ -26,12 +26,15 @@ window.onload = function () {
   const params = new URLSearchParams(window.location.search);
   const lat = parseFloat(params.get('lat'));
   const lon = parseFloat(params.get('lon'));
-  if (lat && lon) {
+  if (!isNaN(lat) && !isNaN(lon)) {
     const origin = { lat, lon };
     selectedPlace = origin;
     showMarker(origin);
     requestRecommendation(origin);
   }
+
+  // 최초 지도 로딩 (빈 지도)
+  showEmptyMap();
 };
 
 // 🔍 자동완성 기능
@@ -103,11 +106,23 @@ function showMarker(coord) {
       map: map,
       position: new kakao.maps.LatLng(coord.lat, coord.lon)
     });
-  }); // ← 이 닫는 괄호+세미콜론 중요!
+  });
 }
 
-// 🧾 추천 결과 출력 (임시 콘솔 출력)
+// 초기 지도만 보일 때 (마커 없이)
+function showEmptyMap() {
+  kakao.maps.load(function () {
+    const container = document.getElementById('map');
+    const mapOption = {
+      center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울 중심
+      level: 6
+    };
+    new kakao.maps.Map(container, mapOption);
+  });
+}
+
+// 🧾 추천 결과 출력 (임시)
 function showResults(groups, origin, directToGilETA) {
   console.log("📦 추천 결과:", groups);
-  // 교수님이 기존에 사용하시던 마크업 출력 구조를 여기에 넣으시면 됩니다.
+  // 교수님이 추후 마크업 렌더링 넣으실 수 있도록 placeholder 남겨둠
 }
