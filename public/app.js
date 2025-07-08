@@ -73,16 +73,19 @@ function requestRecommendation(origin) {
     .catch(err => alert("실패: " + err.message));
 }
 
+// ✅ Kakao Maps 관련 코드를 안전하게 감싸줍니다
 function showMarker(coord) {
-  const container = document.getElementById('map');
-  container.innerHTML = '';
-  const map = new kakao.maps.Map(container, {
-    center: new kakao.maps.LatLng(coord.lat, coord.lon),
-    level: 3
-  });
-  new kakao.maps.Marker({
-    map: map,
-    position: new kakao.maps.LatLng(coord.lat, coord.lon)
+  kakao.maps.load(function () {
+    const container = document.getElementById('map');
+    container.innerHTML = '';
+    const map = new kakao.maps.Map(container, {
+      center: new kakao.maps.LatLng(coord.lat, coord.lon),
+      level: 3
+    });
+    new kakao.maps.Marker({
+      map: map,
+      position: new kakao.maps.LatLng(coord.lat, coord.lon)
+    });
   });
 }
 
