@@ -35,15 +35,21 @@ export default async function handler(req, res) {
   }
 
   const GIL = { name: "길병원", lat: 37.452699, lon: 126.707105 };
+  const logs = [];
+
+  const logF = msg => {
+    logs.push(msg);
+    console.log(msg);
+  };
 
   try {
     const traumaRes = await fetch(`${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}/data/traumaPoints_within_9km.json`);
     const traumaPoints = await traumaRes.json();
-    console.log(`2. TP 총 ${traumaPoints.length}개 로딩됨.`);
+    logF(`📍 [2] traumaPoints 총 ${traumaPoints.length}개 로딩됨`);
 
     const directETA = await getKakaoRoute(origin, GIL);
     const directToGilETA = Math.round(directETA.duration / 60);
-    console.log(`1. directToGil 단일목적지로 계산 성공: ${directToGilETA}분.`);
+    logF(`📍 [1] directToGil 계산 완료: ${directToGilETA}분`);
 
     const eta119List = await Promise.all(
       traumaPoints.map(async tp => {
@@ -56,10 +62,10 @@ export default async function handler(req, res) {
         }
       })
     );
-    console.log(`3. origin→TP 모두 계산 성공.`);
+    logF(`📍 [3] origin → traumaPoints 경로 계산 완료`);
 
     const eta119Valid = eta119List.filter(tp => tp && tp.eta119 < directToGilETA);
-    console.log(`4. 119ETA ≥ directToGil ETA로 탈락 ${eta119List.length - eta119Valid.length}개 → ${eta119Valid.length}개 생존.`);
+    logF(`📍 [4] 119ETA ≥ 직행인 곳 ${eta119List.length - eta119Valid.length}개 탈락 → 남은 ${eta119Valid.length}개`);
 
     const withDocETA = await Promise.all(
       eta119Valid.map(async tp => {
@@ -72,10 +78,19 @@ export default async function handler(req, res) {
         }
       })
     );
-    console.log(`5. etadocRaw 계산 완료, 15분 지연 포함 → etaDoc 계산 완료.`);
+    logF(`📍 [5] 길병원 → traumaPoints 경로 계산 완료 (닥터카 ETA)`);
 
     const withDocValid = withDocETA.filter(tp => tp && tp.eta119 > tp.etaDoc);
-    console.log(`6. 119ETA ≤ etaDoc으로 탈락 ${withDocETA.length - withDocValid.length}개 → ${withDocValid.length}개 생존.`);
+    logF(`📍 [6] 닥터카 ETA ≥ 119ETA 인 곳 ${withDocETA.length - withDocValid.length}개 탈락 → 남은 ${withDocValid.length}개`);
+
+    withDocValid.forEach(tp => {
+      tp.etaGap = tp.eta119 - tp.etaDoc;
+    });
+
+    const danger = withDocValid.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5);
+    const accurate = withDocValid.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10);
+    const safe = withDocValid.filter(tp => tp.etaGap >= 10);
+    logF(`📍 [7] danger ${danger.length}개, accurate ${accurate.length}개, safe ${safe.length}개 분류됨`);
 
     const withTpToGil = await Promise.all(
       withDocValid.map(async tp => {
@@ -89,29 +104,25 @@ export default async function handler(req, res) {
         }
       })
     );
-    console.log(`8. TP→길병원 다중출발지 계산 성공.`);
+    logF(`📍 [8] traumaPoints → 길병원 경로 계산 완료`);
 
     const finalList = withTpToGil.filter(tp => tp && tp.totalTransferTime <= directToGilETA + 20);
-    console.log(`10. totalTransferTime - directToGil ≥ 20분 초과로 탈락 ${withTpToGil.length - finalList.length}개 → ${finalList.length}개 최종 생존.`);
+    logF(`📍 [10] totalTransferTime - directToGil ≥ 20분인 ${withTpToGil.length - finalList.length}개 탈락 → 최종 ${finalList.length}개 생존`);
 
-    console.log(`11. 🔍 모든 필터링 완료.`);
+    logF(`📍 [11] 모든 필터링 완료`);
 
     finalList.forEach(tp => {
       tp.etaGap = tp.eta119 - tp.etaDoc;
     });
 
-    const danger = finalList.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5);
-    const accurate = finalList.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10);
-    const safe = finalList.filter(tp => tp.etaGap >= 10);
-    console.log(`7. ETA gap 기준 분류 → danger=${danger.length}, accurate=${accurate.length}, safe=${safe.length}`);
-
-    const column1 = [...danger, ...accurate, ...safe]
+    const column1 = [...finalList]
+      .filter(tp => tp.etaGap >= 3)
       .sort((a, b) => a.totalTransferTime - b.totalTransferTime)
       .slice(0, 8);
     const c1Danger = column1.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5).length;
     const c1Accurate = column1.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
     const c1Safe = column1.filter(tp => tp.etaGap >= 10).length;
-    console.log(`12. Column1 출력 → danger=${c1Danger}, accurate=${c1Accurate}, safe=${c1Safe}`);
+    logF(`📍 [12] Column1: danger ${c1Danger}개, accurate ${c1Accurate}개, safe ${c1Safe}개`);
 
     const column2 = finalList
       .filter(tp => tp.totalTransferTime - directToGilETA <= 5)
@@ -120,7 +131,7 @@ export default async function handler(req, res) {
     const c2Danger = column2.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5).length;
     const c2Accurate = column2.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
     const c2Safe = column2.filter(tp => tp.etaGap >= 10).length;
-    console.log(`13. Column2 출력 → danger=${c2Danger}, accurate=${c2Accurate}, safe=${c2Safe}`);
+    logF(`📍 [13] Column2: danger ${c2Danger}개, accurate ${c2Accurate}개, safe ${c2Safe}개`);
 
     const column3 = finalList
       .filter(tp => tp.totalTransferTime - directToGilETA <= 10)
@@ -129,17 +140,18 @@ export default async function handler(req, res) {
     const c3Danger = column3.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5).length;
     const c3Accurate = column3.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
     const c3Safe = column3.filter(tp => tp.etaGap >= 10).length;
-    console.log(`14. Column3 출력 → danger=${c3Danger}, accurate=${c3Accurate}, safe=${c3Safe}`);
+    logF(`📍 [14] Column3: danger ${c3Danger}개, accurate ${c3Accurate}개, safe ${c3Safe}개`);
 
     res.status(200).json({
       directToGilETA,
       column1,
       column2,
-      column3
+      column3,
+      log: logs // 👈 F12용 로그 함께 응답
     });
 
   } catch (err) {
     console.error("🚨 전체 처리 실패:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, log: logs });
   }
 }

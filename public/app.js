@@ -85,6 +85,14 @@ function requestRecommendation(origin) {
   })
     .then(res => res.json())
     .then(data => {
+      // 📦 콘솔 로그 출력
+      if (Array.isArray(data.log)) {
+        console.group("📦 추천 로직 로그");
+        data.log.forEach(line => console.log(line));
+        console.groupEnd();
+      }
+
+      // 👇 추천 결과 표시 함수 호출
       showResults(data.recommendations, origin, data.directToGilETA);
     })
     .catch(err => alert("❌ 경로 추천 실패: " + err.message))
