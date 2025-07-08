@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Traumapoint with Kakao</title>
   <link rel="stylesheet" href="/style.css" />
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=15c28ebb75dda243548737ac615a5681"></script>
+
+  <!-- ✅ Kakao Maps SDK with autoload + services -->
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=15c28ebb75dda243548737ac615a5681&libraries=services&autoload=true"></script>
+
   <style>
     #carouselContainer {
       display: flex;
@@ -104,7 +107,9 @@
     본 앱은 인천, 김포, 광명, 부천, 시흥 지역의 정보를 포함합니다.
   </footer>
 
-  <script src="/app.js"></script>
+  <!-- ✅ JS는 defer로 하단에 위치 -->
+  <script defer src="/app.js"></script>
+
   <script>
     document.getElementById('copyAppLink').addEventListener('click', () => {
       navigator.clipboard.writeText(window.location.origin);
