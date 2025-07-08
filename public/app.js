@@ -92,7 +92,7 @@ function requestRecommendation(origin) {
 
 // 🗺️ 지도와 마커 표시
 function showMarker(coord) {
-  kakao.maps.load(() => {
+  kakao.maps.load(function () {
     const container = document.getElementById('map');
     container.innerHTML = '';
     const map = new kakao.maps.Map(container, {
@@ -100,10 +100,10 @@ function showMarker(coord) {
       level: 3
     });
     new kakao.maps.Marker({
-      map,
+      map: map,
       position: new kakao.maps.LatLng(coord.lat, coord.lon)
     });
-  });
+  }); // ← 이 닫는 괄호+세미콜론 중요!
 }
 
 // 🧾 추천 결과 출력 (임시 콘솔 출력)
