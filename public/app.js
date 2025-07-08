@@ -22,7 +22,6 @@ window.onload = function () {
     }
   });
 
-  // URL 파라미터로 좌표 전달된 경우 자동 추천
   const params = new URLSearchParams(window.location.search);
   const lat = parseFloat(params.get('lat'));
   const lon = parseFloat(params.get('lon'));
@@ -33,11 +32,9 @@ window.onload = function () {
     requestRecommendation(origin);
   }
 
-  // 최초 지도 로딩 (빈 지도)
   showEmptyMap();
 };
 
-// 🔍 자동완성 기능
 function handleAutocomplete(e) {
   const keyword = e.target.value;
   const box = document.getElementById('suggestions');
@@ -65,7 +62,6 @@ function handleAutocomplete(e) {
     });
 }
 
-// 📍 추천 버튼 눌렀을 때
 function findTraumapoint() {
   if (!selectedPlace) {
     alert("⛔ 장소를 먼저 선택하세요.");
@@ -74,7 +70,6 @@ function findTraumapoint() {
   requestRecommendation(selectedPlace);
 }
 
-// ✅ 서버에 추천 요청
 function requestRecommendation(origin) {
   document.getElementById("loading").style.display = "block";
 
@@ -85,15 +80,12 @@ function requestRecommendation(origin) {
   })
     .then(res => res.json())
     .then(data => {
-      // 📦 콘솔 로그 출력
       if (Array.isArray(data.log)) {
         console.group("📦 추천 로직 로그");
         data.log.forEach(line => console.log(line));
         console.groupEnd();
       }
-
-      // 👇 추천 결과 표시 함수 호출
-      showResults(data.recommendations, origin, data.directToGilETA);
+      showResults(data, origin);
     })
     .catch(err => alert("❌ 경로 추천 실패: " + err.message))
     .finally(() => {
@@ -101,7 +93,6 @@ function requestRecommendation(origin) {
     });
 }
 
-// 🗺️ 지도와 마커 표시
 function showMarker(coord) {
   kakao.maps.load(function () {
     const container = document.getElementById('map');
@@ -117,20 +108,40 @@ function showMarker(coord) {
   });
 }
 
-// 초기 지도만 보일 때 (마커 없이)
 function showEmptyMap() {
   kakao.maps.load(function () {
     const container = document.getElementById('map');
     const mapOption = {
-      center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울 중심
+      center: new kakao.maps.LatLng(37.5665, 126.9780),
       level: 6
     };
     new kakao.maps.Map(container, mapOption);
   });
 }
 
-// 🧾 추천 결과 출력 (임시)
-function showResults(groups, origin, directToGilETA) {
-  console.log("📦 추천 결과:", groups);
-  // 교수님이 추후 마크업 렌더링 넣으실 수 있도록 placeholder 남겨둠
+function showResults(data, origin) {
+  const { column1, column2, column3, directToGilETA } = data;
+  console.log("📦 추천 결과:", data);
+
+  const createCard = (tp) => {
+    const grade = tp.etaGap >= 10 ? "safe" : tp.etaGap >= 5 ? "accurate" : "danger";
+    return `
+      <div class="tp-card">
+        <div class="badge ${grade}">${grade}</div>
+        <h4>${tp.name}</h4>
+        <ul>
+          <li><b>주소:</b> ${tp.address}</li>
+          <li><b>연락처:</b> ${tp.phone}</li>
+          <li><b>길병원 직행 ETA:</b> ${directToGilETA}분</li>
+          <li><b>119 ETA(의사접촉시간):</b> <b>${tp.eta119}분</b></li>
+          <li><b>총 이송 시간:</b> <b style="color:red;">${tp.totalTransferTime}분</b></li>
+          <li><b>닥터카 대기 시간:</b> ${tp.etaGap}분</li>
+        </ul>
+      </div>
+    `;
+  };
+
+  document.getElementById("col1").innerHTML = column1.map(createCard).join("") || "<p>추천 없음</p>";
+  document.getElementById("col2").innerHTML = column2.map(createCard).join("") || "<p>추천 없음</p>";
+  document.getElementById("col3").innerHTML = column3.map(createCard).join("") || "<p>추천 없음</p>";
 }
