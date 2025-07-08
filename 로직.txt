@@ -1,3 +1,5 @@
+필터로직 
+
 1. origin > gil (directtogil) 계산. 단일목적지 길찾기 기능을 사용해. GET으로 호출한는 것 같음.
 2. origintotp 들 모두 계산 
 	다중목적지 길찾기 기능사용, 100개 한번들이며, 카카오에서 제공한 KEY를 쓰면 됨. 
@@ -23,3 +25,23 @@
 15. 전부 REST API KEY 를 쓰는거 같음.
 
 16. 출력내용은 아까 위 목록에 대해 각 TP에 대해 TP이름, 연락처, 주소, directtogil, 닥터카접촉시간(119ETA), 총이송시간(totaltransfertime) , 닥터카 tp대기시간(etadoc-119ETA) 이렇게 표시해줄거야.
+
+
+-----------------------------------------------------------------------
+
+로그뜨는 순서
+
+1. directtogil 단일목적지로 계산성공함.  : 몇분나옴.
+2. tp 몇개 로딩됨. 
+3. origintotp 모두 계산 성공함. 
+4. 119ETA - directtogil 이 0보다 같거나 커서 탈락된개 몇개. 그래서 몇개 남음. 
+5. (남은거 etadocraw 계산성공함. 여기에 15분 더해서 etadoc나옴. 119ETA랑 비교함. )
+6. 119ETA가 etadoc보다 크거나 같아서 몇개 탈락함. 
+7. danger, accurate, safe로 몇개씩 분류됨. 
+8. 다중출발지로 남은 것들 tptogil 계산 성공함.
+9. totaltransfer time 계산 성공함. 
+10. totaltransfertime - directtogil 이 20분보다 크거나 같아서 몇개 탈락함. 
+11. 이제 필터 다됨. 
+12. Column1은 danger 몇개, accurate몇개, safe 몇개 출력됨.
+13. Column2은 danger 몇개, accurate몇개, safe 몇개 출력됨.
+14. Column3은 danger 몇개, accurate몇개, safe 몇개 출력됨.

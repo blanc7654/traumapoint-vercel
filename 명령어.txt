@@ -1,0 +1,6 @@
+명령어 
+
+git add .
+git commit -m "vsdg"
+git push origin main
+vercel --prod
