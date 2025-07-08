@@ -15,16 +15,16 @@ async function getKakaoRoute(origin, destination) {
     "Content-Type": "application/json"
   };
 
-  console.log("📡 요청: ", url.toString());
+  console.log("\n📡 [요청] Kakao 길찾기 API:", url.toString());
 
   const response = await fetch(url.toString(), { method: "GET", headers });
   const data = await response.json();
 
-  console.log("📬 응답 요약: ", JSON.stringify(data.routes?.[0]?.summary));
+  console.log("📬 [응답 요약]", JSON.stringify(data.routes?.[0]?.summary));
 
   const route = data.routes?.[0]?.summary;
   if (!route) {
-    console.error("❌ 경로 요약 정보 없음:", data);
+    console.error("❌ 경로 요약 정보 없음:", JSON.stringify(data));
     throw new Error(`경로 요약 정보 없음`);
   }
   return {
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   }
 
   const { origin } = req.body;
-  console.log("📍 받은 origin:", origin);
+  console.log("\n📍 [입력 Origin]:", origin);
 
   if (!origin || typeof origin.lat !== "number" || typeof origin.lon !== "number") {
     console.error("❌ origin 포맷 오류:", origin);
@@ -55,13 +55,14 @@ export default async function handler(req, res) {
 
     const directETA = await getKakaoRoute(origin, GIL);
     const directToGilETA = Math.round(directETA.duration / 60);
-    console.log("🛣️ directToGilETA:", directToGilETA, "분");
+    console.log("🛣️ [직행 ETA] directToGilETA:", directToGilETA, "분");
 
     const eta119List = await Promise.all(
       traumaPoints.map(async tp => {
         try {
           const eta = await getKakaoRoute(origin, tp);
           const eta119 = Math.round(eta.duration / 60);
+          console.log(`➡️ ${tp.name}: 119 ETA = ${eta119}분`);
           if (eta119 < directToGilETA) {
             return { ...tp, eta119 };
           } else {
@@ -76,17 +77,18 @@ export default async function handler(req, res) {
     );
 
     const eta119Valid = eta119List.filter(Boolean);
-    console.log(`🧮 eta119 유효 지점 수: ${eta119Valid.length}`);
+    console.log(`🧮 [1차 통과] eta119 유효 지점 수: ${eta119Valid.length}`);
 
     const withDocETA = await Promise.all(
       eta119Valid.map(async tp => {
         try {
           const etaDocRaw = await getKakaoRoute(GIL, tp);
           const etaDoc = Math.round(etaDocRaw.duration / 60) + 15;
+          console.log(`🚑 ${tp.name}: etaDoc=${etaDoc} vs eta119=${tp.eta119}`);
           if (tp.eta119 > etaDoc) {
             return { ...tp, etaDoc };
           } else {
-            console.log(`⚠️ 탈락 (닥터카가 더 늦음): ${tp.name}, eta119=${tp.eta119}, etaDoc=${etaDoc}`);
+            console.log(`⚠️ 탈락 (닥터카가 더 늦음): ${tp.name}`);
             return null;
           }
         } catch (err) {
@@ -97,7 +99,7 @@ export default async function handler(req, res) {
     );
 
     const withDocValid = withDocETA.filter(Boolean);
-    console.log(`🧮 etaDoc 유효 지점 수: ${withDocValid.length}`);
+    console.log(`🧮 [2차 통과] etaDoc 유효 지점 수: ${withDocValid.length}`);
 
     const withTpToGil = await Promise.all(
       withDocValid.map(async tp => {
@@ -105,10 +107,11 @@ export default async function handler(req, res) {
           const etaToGil = await getKakaoRoute(tp, GIL);
           const tptogilETA = Math.round(etaToGil.duration / 60);
           const totalTransfer = tp.eta119 + tptogilETA;
+          console.log(`🚑➡️🏥 ${tp.name}: tptogil=${tptogilETA}분, totalTransfer=${totalTransfer}분`);
           if (totalTransfer <= directToGilETA + 20) {
             return { ...tp, tptogilETA, totalTransfer };
           } else {
-            console.log(`⚠️ 탈락 (총 이송시간 초과): ${tp.name}, total=${totalTransfer}`);
+            console.log(`⚠️ 탈락 (총 이송시간 초과): ${tp.name}`);
             return null;
           }
         } catch (err) {
@@ -119,13 +122,13 @@ export default async function handler(req, res) {
     );
 
     const finalList = withTpToGil.filter(Boolean);
-    console.log(`🎯 최종 추천 가능 지점 수: ${finalList.length}`);
+    console.log(`🎯 [최종 통과] 추천 가능 지점 수: ${finalList.length}`);
 
     const safe = finalList.filter(tp => tp.eta119 - tp.etaDoc >= 10);
     const accurate = finalList.filter(tp => tp.eta119 - tp.etaDoc >= 5 && tp.eta119 - tp.etaDoc < 10);
     const risk = finalList.filter(tp => tp.eta119 - tp.etaDoc >= 3 && tp.eta119 - tp.etaDoc < 5);
 
-    console.log(`📊 그룹별 분류: safe=${safe.length}, accurate=${accurate.length}, risk=${risk.length}`);
+    console.log(`📊 그룹별 분류 결과: safe=${safe.length}, accurate=${accurate.length}, risk=${risk.length}`);
 
     res.status(200).json({
       origin,

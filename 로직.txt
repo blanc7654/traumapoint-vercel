@@ -1,0 +1,25 @@
+1. origin > gil (directtogil) 계산. 단일목적지 길찾기 기능을 사용해. GET으로 호출한는 것 같음.
+2. origintotp 들 모두 계산 
+	다중목적지 길찾기 기능사용, 100개 한번들이며, 카카오에서 제공한 KEY를 쓰면 됨. 
+	호출방식: POST
+	카카오에서 제공한거 :  /v1/api/navi-affiliate/destinations/directions100
+	저번에 보니까 사이드에서 열어야지 웹앱에 바로 못넣게 한다? 라고 니가 했던거 같음. 
+	카카오에서 100개까지 한번들에 넣을수있게 해줬는데 tp가 총 40몇개? 정도 되니까 상관 없고,,,한번들로 계산해도 될거같고 
+	Radius 는 50km로 카카오에서 조정해줘서 그거 입력해야하는거같던데 입력해야되고,,
+3. origintotp(119ETA) 가 directtogil보다 크면 탈락. 
+4. 3번에서 탈락한거 제외하고 giltotop(etadocraw)계산[다중목적지기능사용], 여기에 15분 더한 etadoc과 119ETA를 비교.
+5. 119ETA가 etadoc보다 크거나 같으면 탈락. 
+6. etadoc - 119ETA 가 <5분이면 danger 5~10분이면 accurate, 10분이상이면 safe로 분류. 
+7. 위에 언급한 두번에 걸쳐 탈락하고 남은것들을 tptogil 계산. 다중출발지기능사용. 
+	다중출발지 radius는 마찬가지로 50km 이고 /v1/api/navi-affiliate/origins/directions100 이거를 씀. 
+8. tptogil +119ETA가 totaltransfer time이 됨. 
+9. totaltransfertime - directtogil >20분은 탈락. 
+10. 이제 세번에 걸쳐 탈락하고 남은것들을 출력해줘야하는데...
+11. Column 1,2,3으로 나눠서 출력할거야. 
+12. Column1은 totaltransfertime 짧은 순으로 나열할거야. danger2개, accurate3개, safe 3개 이렇게 말이야. 
+13. Column2는 totaltransfertime - directtogil 이 5분 이하인 것들로만 구성되고 119ETA가 작은 순으로 배열할거야. 마찬가지로danger2개, accurate3개, safe 3개 표현. 
+14. Column3은 totaltransfertime - directtogil 이 10분 이하인 것들로만 구성되고 119ETA가 작은 순으로 배열할거야. 마찬가지로danger2개, accurate3개, safe 3개 표현. 
+
+15. 전부 REST API KEY 를 쓰는거 같음.
+
+16. 출력내용은 아까 위 목록에 대해 각 TP에 대해 TP이름, 연락처, 주소, directtogil, 닥터카접촉시간(119ETA), 총이송시간(totaltransfertime) , 닥터카 tp대기시간(etadoc-119ETA) 이렇게 표시해줄거야.
