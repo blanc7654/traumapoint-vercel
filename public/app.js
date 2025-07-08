@@ -1,13 +1,12 @@
 let selectedPlace = null;
 
 window.onload = function () {
-  // ✅ kakao 객체가 로드될 때까지 기다렸다가 load 실행
   const waitForKakao = setInterval(() => {
     if (window.kakao && window.kakao.maps && typeof kakao.maps.load === "function") {
       clearInterval(waitForKakao);
-      kakao.maps.load(initApp); // ✅ 지도 로딩 시작
+      kakao.maps.load(initApp);
     }
-  }, 100); // 100ms 간격으로 체크
+  }, 100);
 };
 
 function initApp() {
