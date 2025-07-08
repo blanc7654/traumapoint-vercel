@@ -5,137 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Traumapoint with Kakao</title>
   <link rel="stylesheet" href="/style.css" />
-
-  <!-- ✅ Kakao Maps SDK with autoload + services -->
-<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b9ccd41f81d72605a0882435c138dc91&libraries=services&autoload=false"></script>
-
-  <style>
-    #carouselContainer {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .carouselSlide {
-      flex: 0 0 100%;
-      scroll-snap-align: start;
-      padding: 10px;
-    }
-
-    @media (min-width: 768px) {
-      #carouselContainer {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        overflow: unset;
-        scroll-snap-type: none;
-      }
-      .carouselSlide {
-        flex: unset;
-        scroll-snap-align: unset;
-      }
-    }
-
-    #slideIndicator {
-      position: fixed;
-      top: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #fff;
-      padding: 4px 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      font-weight: bold;
-      font-size: 0.9em;
-      z-index: 1000;
-    }
-
-    #dotIndicator {
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.2em;
-      color: #888;
-      z-index: 1000;
-    }
-  </style>
+  
+  <!-- ✅ Kakao Maps SDK autoload 꺼짐 -->
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b9ccd41f81d72605a0882435c138dc91&libraries=services&autoload=false"></script>
 </head>
 <body>
-  <header>
-    <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div>
-        <h1>🚑 Traumapoint</h1>
-        <p>Kakao 기반 외상 이송 포인트 추천 시스템</p>
-      </div>
-      <div style="text-align: center;">
-        <img src="/qr-code.png" alt="Traumapoint QR" style="height: 100px; margin-left: 20px;" />
-        <button onclick="shareQR()" style="margin-top: 8px;">📤 QR 코드 공유하기</button>
-      </div>
-    </div>
-  </header>
+  <div id="map" style="width:100%; height:400px; border: 1px solid black;"></div>
 
-  <main>
-    <input type="text" id="startInput" placeholder="출발지를 입력하세요 (예: 광명역)" />
-    <div id="suggestions"></div>
-    <button id="searchBtn">추천 받기</button>
-    <button id="currentLocationBtn">📍 현재 위치에서 추천받기</button>
-    <button id="copyAppLink">Traumapoint 앱 공유하기</button>
-
-    <div id="loading" style="display:none; font-weight:bold; margin:10px; text-align:center;">
-      ⏳ 경로 추천 계산 중입니다. 잠시만 기다려주세요...
-    </div>
-
-    <div id="carouselContainer">
-      <div id="col1" class="carouselSlide"></div>
-      <div id="col2" class="carouselSlide"></div>
-      <div id="col3" class="carouselSlide"></div>
-    </div>
-
-    <div id="slideIndicator">1 / 3</div>
-    <div id="dotIndicator">● ○ ○</div>
-
-    <div id="map" style="width:100%; height:400px;"></div>
-  </main>
-
-  <footer style="padding: 15px; text-align: center; font-size: 0.9em; color: #777;">
-    ⚠️ 이 앱은 참고용으로 제공됩니다.<br>
-    실제 이송 판단 및 조치는 구급대나 의료진 등 전문가의 최종 판단에 따라야 합니다.<br>
-    <span style="color: red; font-weight: bold;">본 앱은 정보 제공에 대한 법적 책임을 지지 않습니다.</span><br><br>
-    Special thanks to my beloved wife for her unwavering support and love.<br>
-    © 2025 Jaeik Jang, MD. All rights reserved. l Contact: <a href="mailto:blanc7654@gmail.com">blanc7654@gmail.com</a><br>
-    본 앱은 인천, 김포, 광명, 부천, 시흥 지역의 정보를 포함합니다.
-  </footer>
-
-  <!-- ✅ JS는 defer로 하단에 위치 -->
-  <script defer src="/app.js"></script>
-
-  <script>
-    document.getElementById('copyAppLink').addEventListener('click', () => {
-      navigator.clipboard.writeText(window.location.origin);
-      alert("✅ Traumapoint 기본 링크가 복사되었습니다!");
-    });
-
-    function shareQR() {
-      const imageUrl = window.location.origin + "/images/qr-code.png";
-      navigator.clipboard.writeText(imageUrl).then(() => {
-        alert("📎 QR 코드 이미지 링크가 복사되었습니다!\n" + imageUrl);
-      }).catch(err => {
-        alert("❌ 복사 실패: " + err);
-      });
-    }
-
-    const container = document.getElementById('carouselContainer');
-    const indicator = document.getElementById('slideIndicator');
-    const dot = document.getElementById('dotIndicator');
-
-    container.addEventListener('scroll', () => {
-      const width = container.offsetWidth;
-      const scrollLeft = container.scrollLeft;
-      const pageIndex = Math.round(scrollLeft / width) + 1;
-      indicator.textContent = `${pageIndex} / 3`;
-      dot.textContent = ['● ○ ○', '○ ● ○', '○ ○ ●'][pageIndex - 1] || '● ○ ○';
-    });
-  </script>
+  <!-- ✅ JS는 defer 없이 body 맨 아래 -->
+  <script src="/app.js"></script>
 </body>
 </html>
