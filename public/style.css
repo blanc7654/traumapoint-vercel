@@ -72,7 +72,7 @@ li {
   margin-bottom: 5px;
 }
 
-/* ✅ 추가된 슬라이드 레이아웃 및 반응형 스타일 */
+/* ✅ 슬라이드 레이아웃 및 반응형 스타일 */
 #carouselContainer {
   display: flex;
   overflow-x: auto;
@@ -100,36 +100,45 @@ li {
   }
 }
 
-#indicatorContainer {
+/* ✅ 인디케이터 고정 위치 */
+#slideIndicator {
   position: fixed;
-  bottom: 10px;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  padding: 5px 15px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: #fff;
+  padding: 4px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   font-weight: bold;
-  z-index: 999;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-
-#slideIndicator {
   font-size: 0.9em;
-  margin-bottom: 3px;
+  z-index: 1000;
 }
 
 #dotIndicator {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 1.2em;
-  letter-spacing: 3px;
+  color: #888;
+  z-index: 1000;
 }
 
-/* ✅ 여기에 아래 코드 추가 */
 @media (min-width: 768px) {
   #dotIndicator,
   #slideIndicator {
     display: none !important;
   }
+}
+
+/* ✅ 결과 항목 스타일 개선 */
+.hospital h4 {
+  margin-top: 0;
+  font-size: 1.1em;
+  color: #333;
+}
+
+.hospital ul li b {
+  color: #222;
 }

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Traumapoint with Tmap</title>
+  <title>Traumapoint with Kakao</title>
   <link rel="stylesheet" href="/style.css" />
-  <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=Xqh4zUvSTE2uxQvWJZcLC6ddGEweKa5UEXSDx47e"></script>
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=15c28ebb75dda243548737ac615a5681"></script>
   <style>
     #carouselContainer {
       display: flex;
@@ -63,7 +63,7 @@
     <div style="display: flex; align-items: center; justify-content: space-between;">
       <div>
         <h1>🚑 Traumapoint</h1>
-        <p>Tmap 기반 외상 이송 포인트 추천 시스템</p>
+        <p>Kakao 기반 외상 이송 포인트 추천 시스템</p>
       </div>
       <div style="text-align: center;">
         <img src="/qr-code.png" alt="Traumapoint QR" style="height: 100px; margin-left: 20px;" />
@@ -89,7 +89,6 @@
       <div id="col3" class="carouselSlide"></div>
     </div>
 
-    <!-- ✅ 고정 인디케이터 -->
     <div id="slideIndicator">1 / 3</div>
     <div id="dotIndicator">● ○ ○</div>
 
@@ -121,7 +120,6 @@
       });
     }
 
-    // ✅ 슬라이드 인디케이터 + 도트 인디케이터 동기화
     const container = document.getElementById('carouselContainer');
     const indicator = document.getElementById('slideIndicator');
     const dot = document.getElementById('dotIndicator');
