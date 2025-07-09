@@ -87,7 +87,7 @@ export default async function handler(req, res) {
       tp.etaGap = tp.eta119 - tp.etaDoc;
     });
 
-    const danger = withDocValid.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5);
+    const danger = withDocValid.filter(tp => tp.etaGap > 0 && tp.etaGap < 5);
     const accurate = withDocValid.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10);
     const safe = withDocValid.filter(tp => tp.etaGap >= 10);
     logF(`📍 [7] danger ${danger.length}개, accurate ${accurate.length}개, safe ${safe.length}개 분류됨`);
@@ -116,10 +116,10 @@ export default async function handler(req, res) {
     });
 
     const column1 = [...finalList]
-      .filter(tp => tp.etaGap >= 3)
+      .filter(tp => tp.etaGap > 0)
       .sort((a, b) => a.totalTransferTime - b.totalTransferTime)
       .slice(0, 8);
-    const c1Danger = column1.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5).length;
+    const c1Danger = column1.filter(tp => tp.etaGap > 0 && tp.etaGap < 5).length;
     const c1Accurate = column1.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
     const c1Safe = column1.filter(tp => tp.etaGap >= 10).length;
     logF(`📍 [12] Column1: danger ${c1Danger}개, accurate ${c1Accurate}개, safe ${c1Safe}개`);
@@ -128,7 +128,7 @@ export default async function handler(req, res) {
       .filter(tp => tp.totalTransferTime - directToGilETA <= 5)
       .sort((a, b) => a.eta119 - b.eta119)
       .slice(0, 8);
-    const c2Danger = column2.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5).length;
+    const c2Danger = column2.filter(tp => tp.etaGap > 0 && tp.etaGap < 5).length;
     const c2Accurate = column2.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
     const c2Safe = column2.filter(tp => tp.etaGap >= 10).length;
     logF(`📍 [13] Column2: danger ${c2Danger}개, accurate ${c2Accurate}개, safe ${c2Safe}개`);
@@ -137,7 +137,7 @@ export default async function handler(req, res) {
       .filter(tp => tp.totalTransferTime - directToGilETA <= 10)
       .sort((a, b) => a.eta119 - b.eta119)
       .slice(0, 8);
-    const c3Danger = column3.filter(tp => tp.etaGap >= 3 && tp.etaGap < 5).length;
+    const c3Danger = column3.filter(tp => tp.etaGap > 0 && tp.etaGap < 5).length;
     const c3Accurate = column3.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
     const c3Safe = column3.filter(tp => tp.etaGap >= 10).length;
     logF(`📍 [14] Column3: danger ${c3Danger}개, accurate ${c3Accurate}개, safe ${c3Safe}개`);
