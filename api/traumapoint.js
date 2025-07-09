@@ -56,43 +56,40 @@ export default async function handler(req, res) {
         try {
           const eta = await getKakaoRoute(origin, tp);
           const eta119 = Math.round(eta.duration / 60);
+          logF(`✅ [3] ${tp.name} 119ETA 계산 완료: ${eta119}분`);
           return { ...tp, eta119 };
         } catch {
+          logF(`❌ [3] ${tp?.name || "이름없음"} 119ETA 계산 실패 (null)`);
           return null;
         }
       })
     );
-    logF(`📍 [3] origin → traumaPoints 경로 계산 완료`);
 
     const invalid119 = eta119List.filter(tp => tp && tp.eta119 >= directToGilETA);
-    invalid119.forEach(tp => {
-      logF(`🚫 [4] ${tp.name} 탈락: 119ETA ${tp.eta119}분 ≥ 직행 ${directToGilETA}분`);
-    });
+    invalid119.forEach(tp => logF(`🚫 [4] ${tp.name} 탈락: 119ETA ${tp.eta119}분 ≥ 직행 ${directToGilETA}분`));
     const eta119Valid = eta119List.filter(tp => tp && tp.eta119 < directToGilETA);
-    logF(`📍 [4] 119ETA ≥ 직행인 곳 ${eta119List.length - eta119Valid.length}개 탈락 → 남은 ${eta119Valid.length}개`);
+    logF(`📍 [4] 119ETA ≥ 직행인 곳 ${invalid119.length}개 탈락 → 남은 ${eta119Valid.length}개`);
 
     const withDocETA = await Promise.all(
       eta119Valid.map(async tp => {
         try {
           const etaDocRaw = await getKakaoRoute(GIL, tp);
           const etaDoc = Math.round(etaDocRaw.duration / 60) + 10;
+          logF(`✅ [5] ${tp.name} 닥터카 ETA 계산 완료: ${etaDoc}분`);
           return { ...tp, etaDoc };
         } catch {
+          logF(`❌ [5] ${tp?.name || "이름없음"} 닥터카 ETA 계산 실패 (null)`);
           return null;
         }
       })
     );
-    logF(`📍 [5] 길병원 → traumaPoints 경로 계산 완료 (닥터카 ETA)`);
-    const invalidDoc = withDocETA.filter(tp => tp && tp.etaDoc >= tp.eta119);
-    invalidDoc.forEach(tp => {
-      logF(`🚫 [6] ${tp.name} 탈락: 닥터카ETA ${tp.etaDoc}분 ≥ 119ETA ${tp.eta119}분`);
-    });
-    const withDocValid = withDocETA.filter(tp => tp && tp.eta119 > tp.etaDoc);
-    logF(`📍 [6] 닥터카 ETA ≥ 119ETA 인 곳 ${withDocETA.length - withDocValid.length}개 탈락 → 남은 ${withDocValid.length}개`);
 
-    withDocValid.forEach(tp => {
-      tp.etaGap = tp.eta119 - tp.etaDoc;
-    });
+    const invalidDoc = withDocETA.filter(tp => tp && tp.etaDoc >= tp.eta119);
+    invalidDoc.forEach(tp => logF(`🚫 [6] ${tp.name} 탈락: 닥터카ETA ${tp.etaDoc}분 ≥ 119ETA ${tp.eta119}분`));
+    const withDocValid = withDocETA.filter(tp => tp && tp.eta119 > tp.etaDoc);
+    logF(`📍 [6] 닥터카 ETA ≥ 119ETA 인 곳 ${invalidDoc.length}개 탈락 → 남은 ${withDocValid.length}개`);
+
+    withDocValid.forEach(tp => { tp.etaGap = tp.eta119 - tp.etaDoc; });
 
     const danger = withDocValid.filter(tp => tp.etaGap > 0 && tp.etaGap < 5);
     const accurate = withDocValid.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10);
@@ -105,60 +102,28 @@ export default async function handler(req, res) {
           const etaToGil = await getKakaoRoute(tp, GIL);
           const tptogilETA = Math.round(etaToGil.duration / 60);
           const totalTransferTime = tp.eta119 + tptogilETA;
+          logF(`✅ [8] ${tp.name} TP→길병원 ETA: ${tptogilETA}분, 총이송: ${totalTransferTime}분`);
           return { ...tp, tptogilETA, totalTransferTime };
         } catch {
+          logF(`❌ [8] ${tp?.name || "이름없음"} TP→길병원 ETA 계산 실패 (null)`);
           return null;
         }
       })
     );
-    logF(`📍 [8] traumaPoints → 길병원 경로 계산 완료`);
 
     const invalidTotalTransfer = withTpToGil.filter(tp => tp && tp.totalTransferTime > directToGilETA + 20);
-    invalidTotalTransfer.forEach(tp => {
-      logF(`🚫 [10] ${tp.name} 탈락: 총이송 ${tp.totalTransferTime}분 > 직행 ${directToGilETA} + 20분`);
-    });
+    invalidTotalTransfer.forEach(tp => logF(`🚫 [10] ${tp.name} 탈락: 총이송 ${tp.totalTransferTime}분 = 119ETA ${tp.eta119} + TP→길 ${tp.tptogilETA}분 > 직행 ${directToGilETA} + 20분`));
     const finalList = withTpToGil.filter(tp => tp && tp.totalTransferTime <= directToGilETA + 20);
-    logF(`📍 [10] totalTransferTime - directToGil ≥ 20분인 ${withTpToGil.length - finalList.length}개 탈락 → 최종 ${finalList.length}개 생존`);
+    logF(`📍 [10] totalTransferTime - directToGil ≥ 20분인 ${invalidTotalTransfer.length}개 탈락 → 최종 ${finalList.length}개 생존`);
 
     logF(`📍 [11] 모든 필터링 완료`);
 
-    finalList.forEach(tp => {
-      tp.etaGap = tp.eta119 - tp.etaDoc;
-    });
-
-    const column1 = [...finalList]
-      .filter(tp => tp.etaGap > 0)
-      .sort((a, b) => a.totalTransferTime - b.totalTransferTime)
-      .slice(0, 8);
-    const c1Danger = column1.filter(tp => tp.etaGap > 0 && tp.etaGap < 5).length;
-    const c1Accurate = column1.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
-    const c1Safe = column1.filter(tp => tp.etaGap >= 10).length;
-    logF(`📍 [12] Column1: danger ${c1Danger}개, accurate ${c1Accurate}개, safe ${c1Safe}개`);
-
-    const column2 = finalList
-      .filter(tp => tp.totalTransferTime - directToGilETA <= 5)
-      .sort((a, b) => a.eta119 - b.eta119)
-      .slice(0, 8);
-    const c2Danger = column2.filter(tp => tp.etaGap > 0 && tp.etaGap < 5).length;
-    const c2Accurate = column2.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
-    const c2Safe = column2.filter(tp => tp.etaGap >= 10).length;
-    logF(`📍 [13] Column2: danger ${c2Danger}개, accurate ${c2Accurate}개, safe ${c2Safe}개`);
-
-    const column3 = finalList
-      .filter(tp => tp.totalTransferTime - directToGilETA <= 10)
-      .sort((a, b) => a.eta119 - b.eta119)
-      .slice(0, 8);
-    const c3Danger = column3.filter(tp => tp.etaGap > 0 && tp.etaGap < 5).length;
-    const c3Accurate = column3.filter(tp => tp.etaGap >= 5 && tp.etaGap < 10).length;
-    const c3Safe = column3.filter(tp => tp.etaGap >= 10).length;
-    logF(`📍 [14] Column3: danger ${c3Danger}개, accurate ${c3Accurate}개, safe ${c3Safe}개`);
-
     res.status(200).json({
       directToGilETA,
-      column1,
-      column2,
-      column3,
-      log: logs // 👈 F12용 로그 함께 응답
+      column1: finalList,
+      column2: finalList,
+      column3: finalList,
+      log: logs
     });
 
   } catch (err) {
@@ -166,3 +131,4 @@ export default async function handler(req, res) {
     res.status(500).json({ error: err.message, log: logs });
   }
 }
+
