@@ -64,6 +64,10 @@ export default async function handler(req, res) {
     );
     logF(`📍 [3] origin → traumaPoints 경로 계산 완료`);
 
+    const invalid119 = eta119List.filter(tp => tp && tp.eta119 >= directToGilETA);
+    invalid119.forEach(tp => {
+      logF(`🚫 [4] ${tp.name} 탈락: 119ETA ${tp.eta119}분 ≥ 직행 ${directToGilETA}분`);
+    });
     const eta119Valid = eta119List.filter(tp => tp && tp.eta119 < directToGilETA);
     logF(`📍 [4] 119ETA ≥ 직행인 곳 ${eta119List.length - eta119Valid.length}개 탈락 → 남은 ${eta119Valid.length}개`);
 
@@ -79,7 +83,10 @@ export default async function handler(req, res) {
       })
     );
     logF(`📍 [5] 길병원 → traumaPoints 경로 계산 완료 (닥터카 ETA)`);
-
+    const invalidDoc = withDocETA.filter(tp => tp && tp.etaDoc >= tp.eta119);
+    invalidDoc.forEach(tp => {
+      logF(`🚫 [6] ${tp.name} 탈락: 닥터카ETA ${tp.etaDoc}분 ≥ 119ETA ${tp.eta119}분`);
+    });
     const withDocValid = withDocETA.filter(tp => tp && tp.eta119 > tp.etaDoc);
     logF(`📍 [6] 닥터카 ETA ≥ 119ETA 인 곳 ${withDocETA.length - withDocValid.length}개 탈락 → 남은 ${withDocValid.length}개`);
 
@@ -106,6 +113,10 @@ export default async function handler(req, res) {
     );
     logF(`📍 [8] traumaPoints → 길병원 경로 계산 완료`);
 
+    const invalidTotalTransfer = withTpToGil.filter(tp => tp && tp.totalTransferTime > directToGilETA + 20);
+    invalidTotalTransfer.forEach(tp => {
+      logF(`🚫 [10] ${tp.name} 탈락: 총이송 ${tp.totalTransferTime}분 > 직행 ${directToGilETA} + 20분`);
+    });
     const finalList = withTpToGil.filter(tp => tp && tp.totalTransferTime <= directToGilETA + 20);
     logF(`📍 [10] totalTransferTime - directToGil ≥ 20분인 ${withTpToGil.length - finalList.length}개 탈락 → 최종 ${finalList.length}개 생존`);
 
