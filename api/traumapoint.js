@@ -17,13 +17,22 @@ async function getKakaoRoute(origin, destination) {
   const response = await fetch(url.toString(), { method: "GET", headers });
   const data = await response.json();
 
+if (!response.ok) {
+      throw new Error(`API 오류: ${response.status} ${response.statusText}, 메시지: ${data?.msg || "없음"}`);
+    }
+
   const route = data.routes?.[0]?.summary;
-  if (!route) throw new Error("경로 요약 정보 없음");
+  if (!route) {
+      throw new Error("경로 요약 정보 없음 (data.routes[0].summary 없음)");
+    }
 
   return {
     duration: route.duration,
     distance: route.distance
   };
+  } catch (err) {
+    throw new Error(`getKakaoRoute 실패 (${origin.name || "출발지"} → ${destination.name || "도착지"}): ${err.message}`);
+  }
 }
 
 export default async function handler(req, res) {
@@ -36,11 +45,7 @@ export default async function handler(req, res) {
 
   const GIL = { name: "길병원", lat: 37.452699, lon: 126.707105 };
   const logs = [];
-
-  const logF = msg => {
-    logs.push(msg);
-    console.log(msg);
-  };
+  const logF = msg => {     logs.push(msg);     console.log(msg);  };
 
   try {
     const traumaRes = await fetch(`${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}/data/traumaPoints_within_9km.json`);
@@ -59,7 +64,7 @@ export default async function handler(req, res) {
           logF(`✅ [3] ${tp.name} 119ETA 계산 완료: ${eta119}분`);
           return { ...tp, eta119 };
         } catch {
-          logF(`❌ [3] ${tp?.name || "이름없음"} 119ETA 계산 실패 (null)`);
+          logF(`❌ [3] ${tp?.name || "이름없음"} 119ETA 계산 실패: ${err.message}`);
           return null;
         }
       })
@@ -77,8 +82,8 @@ export default async function handler(req, res) {
           const etaDoc = Math.round(etaDocRaw.duration / 60) + 10;
           logF(`✅ [5] ${tp.name} 닥터카 ETA 계산 완료: ${etaDoc}분`);
           return { ...tp, etaDoc };
-        } catch {
-          logF(`❌ [5] ${tp?.name || "이름없음"} 닥터카 ETA 계산 실패 (null)`);
+         } catch (err) {
+          logF(`❌ [5] ${tp?.name || "이름없음"} 닥터카 ETA 계산 실패: ${err.message}`);
           return null;
         }
       })
@@ -104,8 +109,8 @@ export default async function handler(req, res) {
           const totalTransferTime = tp.eta119 + tptogilETA;
           logF(`✅ [8] ${tp.name} TP→길병원 ETA: ${tptogilETA}분, 총이송: ${totalTransferTime}분`);
           return { ...tp, tptogilETA, totalTransferTime };
-        } catch {
-          logF(`❌ [8] ${tp?.name || "이름없음"} TP→길병원 ETA 계산 실패 (null)`);
+        } catch (err) {
+          logF(`❌ [8] ${tp?.name || "이름없음"} TP→길병원 ETA 계산 실패: ${err.message}`);
           return null;
         }
       })
