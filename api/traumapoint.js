@@ -1,6 +1,7 @@
 const APP_KEY = "15c28ebb75dda243548737ac615a5681";
 
 async function getKakaoRoute(origin, destination) {
+try {
   const url = new URL("https://apis-navi.kakaomobility.com/v1/directions");
   url.searchParams.set("origin", `${origin.lon},${origin.lat},name=${origin.name || "출발지"}`);
   url.searchParams.set("destination", `${destination.lon},${destination.lat},name=${destination.name || "도착지"}`);
