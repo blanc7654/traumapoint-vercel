@@ -71,7 +71,7 @@ export default async function handler(req, res) {
       eta119Valid.map(async tp => {
         try {
           const etaDocRaw = await getKakaoRoute(GIL, tp);
-          const etaDoc = Math.round(etaDocRaw.duration / 60) + 15;
+          const etaDoc = Math.round(etaDocRaw.duration / 60) + 10;
           return { ...tp, etaDoc };
         } catch {
           return null;

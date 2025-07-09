@@ -131,7 +131,7 @@ function showResults(data, origin) {
         <h4>${tp.name}</h4>
         <ul>
           <li><b>주소:</b> ${tp.address}</li>
-          <li><b>연락처:</b> ${tp.phone}</li>
+          <li><b>연락처:</b> ${tp.Tel}</li>
           <li><b>길병원 직행 ETA:</b> ${directToGilETA}분</li>
           <li><b>119 ETA(의사접촉시간):</b> <b>${tp.eta119}분</b></li>
           <li><b>총 이송 시간:</b> <b style="color:red;">${tp.totalTransferTime}분</b></li>
