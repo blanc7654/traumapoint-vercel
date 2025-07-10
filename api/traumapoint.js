@@ -58,6 +58,9 @@ async function getMultiDestinationsETA(origin, destinations) {
     summary: true
   };
 
+  console.log("📤 [디버깅] getMultiDestinationsETA 전송 body:", JSON.stringify(body, null, 2));
+
+ try {
   const response = await fetch(url, {
     method: "POST",
     headers,
@@ -67,10 +70,15 @@ async function getMultiDestinationsETA(origin, destinations) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(`다중 목적지 API 오류: ${response.status} ${response.statusText}, 메시지: ${data?.msg || "없음"}`);
-  }
+      console.log("❌ [디버깅] 카카오 다중 목적지 응답 전체:", JSON.stringify(data, null, 2));
+      throw new Error(`다중 목적지 API 오류: ${response.status} ${response.statusText}, 메시지: ${data?.msg || "없음"}`);
+    }
 
-  return data.routes; // traumaPoints 순서대로 반환됨
+    return data.routes;
+  } catch (err) {
+    console.log("❌ [디버깅] getMultiDestinationsETA 예외 발생:", err.message);
+    throw err;
+  }
 }
 
 async function getMultiOriginsETA(destination, origins) {
