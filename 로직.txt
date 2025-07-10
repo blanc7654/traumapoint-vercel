@@ -5,17 +5,54 @@
 	다중목적지 길찾기 기능사용, 100개 한번들이며, 카카오에서 제공한 KEY를 쓰면 됨. 
 	호출방식: POST
 	카카오에서 제공한거 :  /v1/api/navi-affiliate/destinations/directions100
-	저번에 보니까 사이드에서 열어야지 웹앱에 바로 못넣게 한다? 라고 니가 했던거 같음. 
 	카카오에서 100개까지 한번들에 넣을수있게 해줬는데 tp가 총 40몇개? 정도 되니까 상관 없고,,,한번들로 계산해도 될거같고 
 	Radius 는 50km로 카카오에서 조정해줘서 그거 입력해야하는거같던데 입력해야되고,,
-3. origintotp(119ETA) 가 directtogil보다 크면 탈락. 
-4. 3번에서 탈락한거 제외하고 giltotop(etadocraw)계산[다중목적지기능사용], 여기에 15분 더한 etadoc과 119ETA를 비교.
-5. 119ETA가 etadoc보다 크거나 같으면 탈락. 
+
+필수파라미터는 아래와 같아
+Name	Type	Description	Required
+origins	Object[]	출발지, 최대 30개까지 허용	필수
+x	Double	X 좌표(경도)	필수
+y	Double	Y 좌표(위도)	필수
+key	String	각 출발지를 구분하기 위한 임의의 문자열 지정	필수
+destination	Object	목적지	필수
+name	String	목적지 이름	선택
+x	Double	X 좌표(경도)	필수
+y	Double	Y 좌표(위도)	필수
+radius	Int	길찾기 반경(미터)(최대: 10000)	필수
+priority	String	경로 탐색 우선순위 옵션
+
+다음 중 하나:
+TIME: 최단 시간
+DISTANCE: 최단 경로
+(기본값: TIME)	선택
+avoid	String[]	경로 탐색 제한 옵션
+
+다음 값 사용 가능:
+ferries: 페리 항로
+toll: 유료 도로
+motorway: 자동차 전용 도로
+schoolzone: 어린이 보호 구역
+uturn: 유턴
+(기본값: null)
+
+여러 개의 제한 옵션을 사용하려면 다음과 같이 연결
+(예: ["ferries", "motorway"])	선택
+roadevent	Int	유고(교통사고, 행사, 재난, 도로 공사 등의 교통 장애)로 인한 도로 통제 정보 반영 옵션
+
+0: 도로 전면 통제 정보 반영
+1: 출발지 및 목적지 주변의 도로 전면 통제 정보 반영 안 함
+2: 모든 도로 전면 통제 정보 반영 안 함
+(기본값: 0)	선택
+
+
+3. origintotp(119ETA) 가 directtogil보다 크면 @@@탈락. 
+4. 3번에서 탈락한거 제외하고 giltotop(etadocraw)계산[다중목적지기능사용], 여기에 10분 더한 etadoc과 119ETA를 비교.
+5. 119ETA가 etadoc보다 크거나 같으면 @@@탈락. 
 6. etadoc - 119ETA 가 <5분이면 danger 5~10분이면 accurate, 10분이상이면 safe로 분류. 
 7. 위에 언급한 두번에 걸쳐 탈락하고 남은것들을 tptogil 계산. 다중출발지기능사용. 
 	다중출발지 radius는 마찬가지로 50km 이고 /v1/api/navi-affiliate/origins/directions100 이거를 씀. 
 8. tptogil +119ETA가 totaltransfer time이 됨. 
-9. totaltransfertime - directtogil >20분은 탈락. 
+9. totaltransfertime - directtogil >20분은 @@@탈락. 
 10. 이제 세번에 걸쳐 탈락하고 남은것들을 출력해줘야하는데...
 11. Column 1,2,3으로 나눠서 출력할거야. 
 12. Column1은 totaltransfertime 짧은 순으로 나열할거야. danger2개, accurate3개, safe 3개 이렇게 말이야. 
@@ -34,9 +71,9 @@
 1. directtogil 단일목적지로 계산성공함.  : 몇분나옴.
 2. tp 몇개 로딩됨. 
 3. origintotp 모두 계산 성공함. 
-4. 119ETA - directtogil 이 0보다 같거나 커서 탈락된개 몇개. 그래서 몇개 남음. 
-5. (남은거 etadocraw 계산성공함. 여기에 15분 더해서 etadoc나옴. 119ETA랑 비교함. )
-6. 119ETA가 etadoc보다 크거나 같아서 몇개 탈락함. 
+4. 119ETA - directtogil 이 0보다 같거나 커서 @@탈락된개 몇개. 그래서 몇개 남음. 
+5. (남은거 etadocraw 계산성공함. 여기에 10분 더해서 etadoc나옴. 119ETA랑 비교함. )
+6. 119ETA가 etadoc보다 크거나 같아서 몇개 @@탈락함. 
 7. danger, accurate, safe로 몇개씩 분류됨. 
 8. 다중출발지로 남은 것들 tptogil 계산 성공함.
 9. totaltransfer time 계산 성공함. 
